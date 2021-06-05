@@ -77,7 +77,7 @@
         </validate>
         <br>
 
-        <button class="btn btn-info btn-block my-3" :disabled="formState.$invalid" type="submit" @click="postUsuario()">Enviar</button>
+        <button class="btn btn-info btn-block my-3" :disabled="formState.$invalid" type="submit">Enviar</button>
 
       </vue-form>
       <br>
@@ -111,17 +111,13 @@
       },
       enviar(){
         console.log({...this.formData})
+        this.postUsuario()
         this.formData = this.getInicialData()
         this.formState._reset()
       },
       async postUsuario(){
-        let usuario = {
-          nombre: this.formData.nombre,
-          edad: this.formData.edad,
-          email: this.formData.email,
-        }
         try{
-           let respuesta = await this.axios.post(this.url,usuario,{'content-type':'application/json'})
+           let respuesta = await this.axios.post(this.url,this.formData,{'content-type':'application/json'})
            console.log("todo ok",respuesta.data)
         }
         catch(error){
